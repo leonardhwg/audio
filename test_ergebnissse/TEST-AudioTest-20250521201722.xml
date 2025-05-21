@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<testsuite name="AudioTest-20250521201722" tests="3" time="0.001" failures="0" errors="3">
+	<testcase classname="AudioTest" name="testDft1" time="0.001">
+		<error type="AssertionError" message="Lists differ: [] != [0, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 500]
+
+Second list contains 16 additional elements.
+First extra element 0:
+0
+
+- []
++ [0, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 500] : dft falsch"><![CDATA[Traceback (most recent call last):
+  File "/Users/ole/VSPorjects/PP/projekt/audio/AudioTest.py", line 16, in testDft1
+    self.assertEqual(list(map(lambda x:round(abs(x).real),dft(ws1))),[0,500,0,0,0,0,0,0,0,0,0,0,0,0,0,500] ,"dft falsch")
+AssertionError: Lists differ: [] != [0, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 500]
+
+Second list contains 16 additional elements.
+First extra element 0:
+0
+
+- []
++ [0, 500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 500] : dft falsch
+]]></error>
+	</testcase>
+	<testcase classname="AudioTest" name="testDft2" time="0.000">
+		<error type="AssertionError" message="Lists differ: [] != [0, 500, 0, 5000, 0, 7500, 0, 0, 0, 0, 0, 7500, 0, 5000, 0, 500]
+
+Second list contains 16 additional elements.
+First extra element 0:
+0
+
+- []
++ [0, 500, 0, 5000, 0, 7500, 0, 0, 0, 0, 0, 7500, 0, 5000, 0, 500] : dft falsch"><![CDATA[Traceback (most recent call last):
+  File "/Users/ole/VSPorjects/PP/projekt/audio/AudioTest.py", line 19, in testDft2
+    self.assertEqual(list(map(lambda x:round(abs(x).real),dft(ws2))),[0,500,0,5000,0,7500,0,0,0,0,0,7500,0,5000,0,500] ,"dft falsch")
+AssertionError: Lists differ: [] != [0, 500, 0, 5000, 0, 7500, 0, 0, 0, 0, 0, 7500, 0, 5000, 0, 500]
+
+Second list contains 16 additional elements.
+First extra element 0:
+0
+
+- []
++ [0, 500, 0, 5000, 0, 7500, 0, 0, 0, 0, 0, 7500, 0, 5000, 0, 500] : dft falsch
+]]></error>
+	</testcase>
+	<testcase classname="AudioTest" name="testDft3" time="0.000">
+		<error type="AssertionError" message="Lists differ: [] != [0, 500, 0, 2500, 0, 2500, 0, 500]
+
+Second list contains 8 additional elements.
+First extra element 0:
+0
+
+- []
++ [0, 500, 0, 2500, 0, 2500, 0, 500] : dft falsch"><![CDATA[Traceback (most recent call last):
+  File "/Users/ole/VSPorjects/PP/projekt/audio/AudioTest.py", line 22, in testDft3
+    self.assertEqual(list(map(lambda x:round(abs(x).real),dft(ws3))),[0,500,0,2500,0,2500,0,500] ,"dft falsch")
+AssertionError: Lists differ: [] != [0, 500, 0, 2500, 0, 2500, 0, 500]
+
+Second list contains 8 additional elements.
+First extra element 0:
+0
+
+- []
++ [0, 500, 0, 2500, 0, 2500, 0, 500] : dft falsch
+]]></error>
+	</testcase>
+	<system-out><![CDATA[]]></system-out>
+	<system-err><![CDATA[]]></system-err>
+</testsuite>
