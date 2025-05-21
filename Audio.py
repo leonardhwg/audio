@@ -17,8 +17,8 @@ def kammertonA2():
 
 def w2():writeWav("kammertonA2.wav", kammertonA2())
 
-def pluggedTime( t, wv): # x=t Abtastrate, i=wv Anzahl der Obertöne
-    return []
+def pluggedTime( t, wv): # x=t Abtastrate, i = Anzahl der Obertöne wv = ?
+  return [(10000*0.5**(x//5000))*(math.sin((1/i))*math.sin(2*math.pi*x*i)) for i in range(10) for x in range(t)]
 
 def pluggedH(x):return pluggedTime(44100//2,x)
 def plugged(x): return pluggedTime(44100,x)
