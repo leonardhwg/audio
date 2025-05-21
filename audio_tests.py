@@ -24,6 +24,6 @@ class AudioTest(unittest.TestCase):
     
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(AudioTest)
-    xmlrunner.XMLTestRunner(output=".").run(suite)
+    xmlrunner.XMLTestRunner(output="./test_ergebnisse").run(suite)
     
   
