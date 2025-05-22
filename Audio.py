@@ -18,7 +18,10 @@ def kammertonA2():
 def w2():writeWav("kammertonA2.wav", kammertonA2())
 
 def pluggedTime( t, wv): # x=t Abtastrate, i = Anzahl der Obertöne wv = ?
-    return [(10000*0.5**(x//5000))*((1/i))*math.sin(2*math.pi*(x/wv)*i) for i in range(1,11) for x in range(t)]
+  return [
+    (10000 * 0.5 ** (x // 5000)) * sum((1 / i) * math.cos(2 * math.pi * (x / wv) * i) for i in range(1, 11))
+    for x in range(t)
+]
 
 def pluggedH(x):return pluggedTime(44100//2,x)
 def plugged(x): return pluggedTime(44100,x)
@@ -84,3 +87,6 @@ def analyseFileStart( fn ):
   ws = getWavFromFile(fn)
   return  zip(stepFrom0(10)
              ,map (lambda x:abs(x).real,dft(list(map(lambda x: complex(0,x),ws[:4410])))[:200]))
+
+if __name__ == "__main__":
+  w3()
