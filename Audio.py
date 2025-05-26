@@ -57,7 +57,14 @@ def abtast():
      yield x
      x += 1/44100
 
-def toPgfplot( ws ): return ""
+def toPgfplot( ws ):
+    cords = ""
+    iter = abtast()
+
+    for w in ws:
+        cords += "\n(" + str(next(iter)) + "," + str(w) + ")"
+
+    return cords[1:]
 
 def writeForLaTeX(resultFileName, ws):
   start = "\\begin{tikzpicture}\n"\
@@ -91,3 +98,4 @@ def analyseFileStart( fn ):
 
 if __name__ == "__main__":
   w3()
+  writeForLaTeX("test.tex", kammertonAHarmonics())
