@@ -77,23 +77,34 @@ def abtast():
 
 def toPgfplot(ws):
   cords = ""
-  iter = abtast()
+  zeiger = abtast()
 
   for w in ws:
-    cords += "\n(" + str(next(iter)) + "," + str(w) + ")"
+    cords += "\n(" + str(next(zeiger)) + "," + str(w) + ")"
 
   return cords[1:]
 
 
 def writeForLaTeX(resultFileName, ws):
-  start = "\\begin{tikzpicture}\n" \
-          "\\begin{axis}\n" \
-          "[axis lines = left,xlabel = $Sekunde$,ylabel = {Samples},]\n" \
-          "\\addplot[color=blue,mark=dot,]\n" \
-          "\\coordinates {\n"
-  end = "};\n" \
-        "\\end{axis}\n" \
-        "\\end{tikzpicture}"
+  start =  (
+        "\\documentclass[tikz,border=5pt]{standalone}\n"
+        "\\usepackage{pgfplots}\n"
+        "\\pgfplotsset{compat=1.18}\n"
+        "\\begin{document}\n"
+        "\\begin{tikzpicture}\n"
+        "\\begin{axis}"
+        "[axis lines = left,xlabel = $Sekunde$,ylabel = {Samples},]\n"
+        "\\addplot[color=blue,mark=dot]"
+        "coordinates {\n"
+    )
+
+  end = (
+        "};\n"
+        "\\end{axis}\n"
+        "\\end{tikzpicture}\n"
+        "\\end{document}\n"
+    )
+
   f = open(resultFileName, "w")
   f.write(start)
   f.write(toPgfplot(ws[:441]))
