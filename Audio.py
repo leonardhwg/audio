@@ -133,4 +133,3 @@ def analyseFileStart(fn):
 
 if __name__ == "__main__":
   w3()
-  writeForLaTeX("test.tex", kammertonAHarmonics())
