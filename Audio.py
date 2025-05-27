@@ -1,6 +1,8 @@
 import math
 import numpy
 from scipy.io import wavfile
+from datetime import datetime
+import os
 
 kammertonA = [10000 * math.sin(2 * 440 * math.pi * x / 44100) for x in range(0, 5 * 44100)]
 
@@ -21,7 +23,7 @@ def w2(): writeWav("kammertonA2.wav", kammertonA2())
 
 
 def pluggedTime(t, wv):  # x=t Abtastrate, i = Anzahl der / Obertöne wv = frequenz
-  amplitude = lambda x: 1000 * 0.5 ** (x // 500) # if x >= 5000 else 10000
+  amplitude = lambda x: 10000 * 0.5 ** (x // 500) # if x >= 5000 else 10000
   return [
      sum((1 / i) * amplitude(x) * math.sin(2 * wv * math.pi * (x / t) * i) for i in range(1, 11))
     for x in range(1, t)
@@ -44,15 +46,14 @@ def w3(): writeWav("pluggedA.wav", kammertonAHarmonics())
 
 
 a = 440
-b = 493#.88
-cs = 554#.37
-d = 587#.33
-e = 659#.25
-fs = 739#.99
-gs = 830#.61
-aP = 880#.00
+b = 493.88
+cs = 554.37
+d = 587.33
+e = 659.25
+fs = 739.99
+gs = 830.61
+aP = 880.00
 notes = [a,b,cs,d,e,fs,gs,aP]
-
 
 
 def scale(): 
@@ -64,21 +65,28 @@ def w4(): writeWav("scale.wav", scale())
 
 chord = [a,cs,e,gs]
 def maj7(): 
-  ap = plugged(a)
-  cp = plugged(cs)
-  ep = plugged(e)
-  gp = plugged(gs)
-  res = [0]*88200
+  ap = pluggedD(a)
+  cp = pluggedD(cs)
+  ep = pluggedD(e)
+  gp = pluggedD(gs)
+  res = [0]*(88200)
   
   for i in range(len(ap)):
     res[i] += ap[i]
   for i in range(len(cp)):
-    res[i+2000] += ap[i]
+    if i + 2000 < len(res):
+      res[i+2000] += cp[i]
+
   for i in range(len(ep)):
-    res[i+4000] += ap[i]
+    if i + 4000 < len(res):
+      res[i+4000] += ep[i]
+
   for i in range(len(gp)):
-    res[i+6000] += ap[i]
+    if i + 6000 < len(res):
+      res[i+6000] += gp[i]
   return res
+
+  
 
 def w5():  writeWav("maj7.wav", maj7())
 
@@ -148,13 +156,17 @@ def analyseFileStart(fn):
   return zip(stepFrom0(10)
              , map(lambda x: abs(x).real, dft(list(map(lambda x: complex(0, x), ws[:4410])))[:200]))
 
+def logChord():
+  xs = maj7()
+  name = "log/" + str(datetime.now()) + "_maj.log"
+  f = open(name,"x")
+  #with open(name, "a") as f:
+  for i,x in enumerate(xs):
+      if(i%100 == 0):
+        f.write(f"[{i}]")
+        f.write(str(x))
+        f.write("\n")
+  writeForLaTeX("latex/maj7.tex",xs)
 
 if __name__ == "__main__":
-  a = plugged(410)
-  max = 0
-  for x in a:
-    if x > max:
-      max = x
-
-  print(max)
-  w5()
+  logChord()
