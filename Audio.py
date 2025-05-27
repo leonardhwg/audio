@@ -53,7 +53,10 @@ gs = 830.61
 aP = 880.00
 
 
-def scale(): return []
+
+def scale(): 
+     return sum([pluggedH(x) for x in chord],[])
+
 
 
 def w4(): writeWav("scale.wav", scale())
