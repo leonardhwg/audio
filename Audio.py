@@ -21,9 +21,9 @@ def w2(): writeWav("kammertonA2.wav", kammertonA2())
 
 
 def pluggedTime(t, wv):  # x=t Abtastrate, i = Anzahl der / Obertöne wv = frequenz
-  amplitude = lambda x: 10000 * 0.5 ** (x // 5000)
+  amplitude = lambda x: 1000 * 0.5 ** (x // 500) # if x >= 5000 else 10000
   return [
-    amplitude(x) * sum((1 / i) * math.cos(2 * wv * math.pi * (x / t) * i) for i in range(1, 11))
+     sum((1 / i) * amplitude(x) * math.sin(2 * wv * math.pi * (x / t) * i) for i in range(1, 11))
     for x in range(1, t)
   ]
 
@@ -44,26 +44,41 @@ def w3(): writeWav("pluggedA.wav", kammertonAHarmonics())
 
 
 a = 440
-b = 493.88
-cs = 554.37
-d = 587.33
-e = 659.25
-fs = 739.99
-gs = 830.61
-aP = 880.00
+b = 493#.88
+cs = 554#.37
+d = 587#.33
+e = 659#.25
+fs = 739#.99
+gs = 830#.61
+aP = 880#.00
+notes = [a,b,cs,d,e,fs,gs,aP]
 
 
 
 def scale(): 
-     return sum([pluggedH(x) for x in chord],[])
+     return sum([pluggedH(x) for x in notes],[])
 
 
 
 def w4(): writeWav("scale.wav", scale())
 
-
-def maj7(): return []
-
+chord = [a,cs,e,gs]
+def maj7(): 
+  ap = plugged(a)
+  cp = plugged(cs)
+  ep = plugged(e)
+  gp = plugged(gs)
+  res = [0]*88200
+  
+  for i in range(len(ap)):
+    res[i] += ap[i]
+  for i in range(len(cp)):
+    res[i+2000] += ap[i]
+  for i in range(len(ep)):
+    res[i+4000] += ap[i]
+  for i in range(len(gp)):
+    res[i+6000] += ap[i]
+  return res
 
 def w5():  writeWav("maj7.wav", maj7())
 
@@ -135,4 +150,11 @@ def analyseFileStart(fn):
 
 
 if __name__ == "__main__":
-  w3()
+  a = plugged(410)
+  max = 0
+  for x in a:
+    if x > max:
+      max = x
+
+  print(max)
+  w5()
