@@ -65,11 +65,11 @@ def w4(): writeWav("scale.wav", scale())
 
 chord = [a,cs,e,gs]
 def maj7(): 
-  ap = pluggedD(a)
-  cp = pluggedD(cs)
-  ep = pluggedD(e)
-  gp = pluggedD(gs)
-  res = [0]*(88200)
+  ap = plugged(a)
+  cp = plugged(cs)
+  ep = plugged(e)
+  gp = plugged(gs)
+  res = [0]*(44100)
   
   for i in range(len(ap)):
     res[i] += ap[i]
@@ -156,17 +156,28 @@ def analyseFileStart(fn):
   return zip(stepFrom0(10)
              , map(lambda x: abs(x).real, dft(list(map(lambda x: complex(0, x), ws[:4410])))[:200]))
 
+def maj7Tone():
+  return sum([plugged(x) for x in chord],[])
+
+
+def tone(wv):
+  return [10000 * math.sin(2 * wv * math.pi * x / 44100) for x in range(22050)]
+
 def logChord():
+  w5()
   xs = maj7()
   name = "log/" + str(datetime.now()) + "_maj.log"
   f = open(name,"x")
-  #with open(name, "a") as f:
+  sum = 0
   for i,x in enumerate(xs):
+      sum += 1
       if(i%100 == 0):
         f.write(f"[{i}]")
         f.write(str(x))
         f.write("\n")
+  f.write(f"Total: {sum}")
   writeForLaTeX("latex/maj7.tex",xs)
 
+
 if __name__ == "__main__":
-  logChord()
+  writeWav("tone.wav",maj7Tone())
