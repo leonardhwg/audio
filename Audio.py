@@ -1,4 +1,5 @@
 import math
+import cmath
 import numpy
 from scipy.io import wavfile
 
@@ -26,7 +27,7 @@ def pluggedTime(t, wv):  # x=t Abtastrate, i = Anzahl der / Obertöne wv = frequ
     amplitude(x) * sum((1 / i) * math.cos(2 * wv * math.pi * (x / t) * i) for i in range(1, 11))
     for x in range(1, t)
   ]
-
+# hab die Aufgabe jetzt auch nochmal gemacht und bei mir kam der selbe Ton raus, also glaube ich der Code ist richtig...? ~Leon
 
 def pluggedH(x): return pluggedTime(44100 // 2, x)
 
@@ -111,11 +112,16 @@ def writeForLaTeX(resultFileName, ws):
   f.write(end)
   f.close()
 
-
-import cmath
-
-
-def dft(xs): return []
+def dft(xs):
+    N = len(xs)
+    result = []
+    for k in range(N):
+        total = 0
+        for n in range(N):
+            angle = -2j * cmath.pi * k * n / N
+            total += xs[n] * cmath.exp(angle)
+        result.append(total / N)
+    return result
 
 
 def stepFrom0(n):
