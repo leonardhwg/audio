@@ -69,21 +69,21 @@ def maj7():
   cp = plugged(cs)
   ep = plugged(e)
   gp = plugged(gs)
-  res = [0]*(44100)
+  res = [0]*(88200)
   
   for i in range(len(ap)):
     res[i] += ap[i]
   for i in range(len(cp)):
-    if i + 2000 < len(res):
-      res[i+2000] += cp[i]
+    if i + 1999 < len(res):
+      res[i+1999] += cp[i]
 
   for i in range(len(ep)):
-    if i + 4000 < len(res):
-      res[i+4000] += ep[i]
+    if i + 3998 < len(res):
+      res[i+3998] += ep[i]
 
   for i in range(len(gp)):
-    if i + 6000 < len(res):
-      res[i+6000] += gp[i]
+    if i + 5997 < len(res):
+      res[i+5997] += gp[i]
   return res
 
   
@@ -163,7 +163,7 @@ def maj7Tone():
 def tone(wv):
   return [10000 * math.sin(2 * wv * math.pi * x / 44100) for x in range(22050)]
 
-def logChord():
+def logMaj():
   w5()
   xs = maj7()
   name = "log/" + str(datetime.now()) + "_maj.log"
@@ -178,6 +178,18 @@ def logChord():
   f.write(f"Total: {sum}")
   writeForLaTeX("latex/maj7.tex",xs)
 
+def logA():
+    xs = plugged(440)
+    name = "log/" + str(datetime.now()) + "_aPlugged.log"
+    f = open(name,"x")
+    sum = 0
+    for i,x in enumerate(xs):
+      sum += 1
+      if(i%100 == 0):
+        f.write(f"[{i}]")
+        f.write(str(x))
+        f.write("\n")
+    f.write(f"Total: {sum}")
 
 if __name__ == "__main__":
-  writeWav("tone.wav",maj7Tone())
+  logA()
