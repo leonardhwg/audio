@@ -87,7 +87,6 @@ def maj7():
   return res
 
   
-
 def w5():  writeWav("maj7.wav", maj7())
 
 
@@ -141,7 +140,16 @@ def writeForLaTeX(resultFileName, ws):
 import cmath
 
 
-def dft(xs): return []
+def dft(xs):
+    N = len(xs)
+    result = []
+    for k in range(N):
+        total = 0
+        for n in range(N):
+            angle = -2j * cmath.pi * k * n / N
+            total += xs[n] * cmath.exp(angle)
+        result.append(total / N)
+    return result
 
 
 def stepFrom0(n):
