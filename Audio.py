@@ -21,12 +21,12 @@ def kammertonA2():
 
 def w2(): writeWav("kammertonA2.wav", kammertonA2())
 
-
 def pluggedTime(t, wv):  # x=t Abtastrate, i = Anzahl der / Obertöne wv = frequenz
-  amplitude = lambda x: 10000 * 0.5 ** (x // 500) # if x >= 5000 else 10000
+  #amplitude = lambda x: 10000 * 0.5 ** (x // 5000) # if x >= 5000 else 10000
   return [
-     sum((1 / i) * amplitude(x) * math.sin(2 * wv * math.pi * (x / t) * i) for i in range(1, 11))
-    for x in range(1, t)
+    (sum([(10000 * math.sin(2 * wv * math.pi * x * i / 44100) / i)
+    for i in range(1, 11)])/(x/5000+1))
+    for x in range(0, t)
   ]
 
 
@@ -63,12 +63,13 @@ def scale():
 
 def w4(): writeWav("scale.wav", scale())
 
+
 chord = [a,cs,e,gs]
-def maj7(): 
-  ap = plugged(a)
-  cp = plugged(cs)
-  ep = plugged(e)
-  gp = plugged(gs)
+def maj7():
+  ap = pluggedD(a)
+  cp = pluggedD(cs)
+  ep = pluggedD(e)
+  gp = pluggedD(gs)
   res = [0]*(88200)
   
   for i in range(len(ap)):
@@ -84,8 +85,8 @@ def maj7():
   for i in range(len(gp)):
     if i + 5997 < len(res):
       res[i+5997] += gp[i]
-  return res
 
+  return res
   
 def w5():  writeWav("maj7.wav", maj7())
 
@@ -200,4 +201,4 @@ def logA():
     f.write(f"Total: {sum}")
 
 if __name__ == "__main__":
-  logA()
+  w3()
