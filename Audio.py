@@ -21,11 +21,10 @@ def kammertonA2():
 
 def w2(): writeWav("kammertonA2.wav", kammertonA2())
 
-def pluggedTime(t, wv):  # x=t Abtastrate, i = Anzahl der / Obertöne wv = frequenz
-  #amplitude = lambda x: 10000 * 0.5 ** (x // 5000) # if x >= 5000 else 10000
+def pluggedTime(t, wv):  
   return [
-    (sum([(10000 * math.sin(2 * wv * math.pi * x * i / 44100) / i)
-    for i in range(1, 11)])/(x/5000+1))
+    sum([(10000 * math.sin(2 * wv * math.pi * x * i / 44100) / i)
+    for i in range(1, 11)])/(x/5000+1)
     for x in range(0, t)
   ]
 
@@ -54,7 +53,6 @@ fs = 739.99
 gs = 830.61
 aP = 880.00
 notes = [a,b,cs,d,e,fs,gs,aP]
-
 
 def scale(): 
      return sum([pluggedH(x) for x in notes],[])
@@ -86,7 +84,15 @@ def maj7():
     if i + 5997 < len(res):
       res[i+5997] += gp[i]
 
-  return res
+  return [  
+    x + y + z + f for (x,y,z,f) in
+    zip(
+      pluggedD(a),
+      [0 for _ in range(0,2000)] + pluggedD(cs),
+      [0 for _ in range(0,4000)] + pluggedD(e),
+      [0 for _ in range(0,6000)] + pluggedD(gs),
+    )
+  ]
   
 def w5():  writeWav("maj7.wav", maj7())
 
@@ -201,4 +207,4 @@ def logA():
     f.write(f"Total: {sum}")
 
 if __name__ == "__main__":
-  w3()
+  w4()
